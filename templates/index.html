@@ -9,28 +9,32 @@
         .box {
             height: 100px;
             width: 100px;
-            border: 1px solid #4CAF50;
+            border: 1px solid;
+            border-color: #C0C0C0;
         }
     </style>
 
 </head>
 
 <div>
-    <div class="box_container">
-        <div class="box"><p><a href="{{ url_for('result', x=0, y=2) }}">0,2</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=1, y=2) }}">1,2</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=2, y=2) }}">2,2</a></p></div>
-    </div>
-    <div class="box_container">
-        <div class="box"><p><a href="{{ url_for('result', x=0, y=1) }}">0,1</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=1, y=1) }}">1,1</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=1, y=2) }}">1,2</a></p></div>
-    </div>
-    <div class="box_container">
-        <div class="box"><p><a href="{{ url_for('result', x=0, y=0) }}">0,0</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=1, y=0) }}">1,0</a></p></div>
-        <div class="box"><p><a href="{{ url_for('result', x=2, y=0) }}">2,0</a></p></div>
-    </div>
+    <h3>
+        {% if is_x_turn %}
+        <p> It is X's turn </p>
+        {% else %}
+        <p> It is O's turn </p>
+        {% endif %}
+    </h3>
+</div>
+
+<div>
+    {% for column in game_data %}
+        {% set column_loop = loop %}
+        <div class="box_container">
+            {% for row in column %}
+                <div class="box"><p><a href="{{ url_for('result', x=loop.index0, y=column_loop.index0) }}">{{loop.index0, column_loop.index0}}</a></p></div>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </div>
 </body>
 </html>
