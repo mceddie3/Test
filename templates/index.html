@@ -27,11 +27,11 @@
 </div>
 
 <div>
-    {% for column in game_data %}
-        {% set column_loop = loop %}
+    {% for row in game_data %}
+        {% set row_loop = loop %}
         <div class="box_container">
-            {% for row in column %}
-                <div class="box"><p><a href="{{ url_for('result', x=loop.index0, y=column_loop.index0) }}">{{loop.index0, column_loop.index0}}</a></p></div>
+            {% for element in row %}
+                <div class="box"><p><a href="{{ url_for('result', x=loop.index0, y=row_loop.index0) }}">{{row_loop.index0, loop.index0}}</a></p><p>{{element}}</p></div>
             {% endfor %}
         </div>
     {% endfor %}
