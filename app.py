@@ -14,7 +14,22 @@ is_x_turn = True
 def has_user_won(x_coordinate, y_coordinate):
     global game_data
 
-    # add logic here
+    search_character = "X" if is_x_turn else "O"
+
+    n = 3
+    col = row = diag = rdiag = 0
+    for i in range(n):
+        if game_data[x_coordinate][i] == search_character:
+            col += 1
+        if game_data[i][y_coordinate] == search_character:
+            row += 1
+        if game_data[i][i] == search_character:
+            diag += 1
+        if game_data[i][n - i - 1] == search_character:
+            rdiag += 1
+
+    if row == n or col == n or diag == n or rdiag == n:
+        return True
     return False
 
 
@@ -38,9 +53,8 @@ def result():
         x = int(request.args.get('x'))
         y = int(request.args.get('y'))
         update_game_state(x, y)
-        print(x, y)
 
-        if has_user_won():
+        if has_user_won(x, y):
             if is_x_turn:
                 return "X WON"
             else:
